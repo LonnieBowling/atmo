@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="splash" *ngIf="splashHold || loading">
+    <div>{{ appTitle }}</div>
+    <div>{{ appDescription }}</div>
+    <div class="splash__status">loading...</div>
+  </div>
+
+  <div *ngIf="!splashHold && !loading">
+    <div class="app-title">{{ appTitle }} - {{ appDescription }}</div>
+    <div class="header">{{ location }}</div>
+    <div class="header__sub">{{ time }}</div>
+    <div class="current">
+      <div class="current__summary">
+        <img
+          class="current__summary--icon"
+          src="{{
+            '../assets/weather-icons/' + forecast.current.icon.value + '.svg'
+          }}"
+          alt=""
+        />
+        {{ forecast.current.summary.value }}
+      </div>
+      <div class="current__main">
+        <div class="current__main--value">
+          {{ snapshot.temperature.value | number: "1.0-0" }}
+        </div>
+        <div class="current__main--uom">{{ snapshot.temperature.uom }}</div>
+      </div>
+      <div class="current__secondary">
+        <div class="current__secondary--row">
+          <div>Indoor</div>
+          <div>
+            {{ snapshot.temperatureIndoor.value | number: "1.0-0" }}
+          </div>
+        </div>
+        <div class="current__secondary--row">
+          <div>High</div>
+          <div>
+            {{ forecast.daily[0].temperatureHigh.value | number: "1.0-0" }}
+          </div>
+        </div>
+        <div class="current__secondary--row">
+          <div>Low</div>
+          <div>
+            {{ forecast.daily[0].temperatureLow.value | number: "1.0-0" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>{{ forecast.current.summaryDaily.value }}</div>
+    <div class="forecast">
+      <div class="forecast__row" *ngFor="let item of forecast.daily">
+        <div class="forecast__row-item forecast__row-item--grow">
+          <div>{{ item.friendlyDate }}</div>
+          <div>{{ item.summary.value }}</div>
+        </div>
+        <div class="forecast__row-item">
+          <img
+            class="forecast__row-item--icon"
+            src="{{ '../assets/weather-icons/' + item.icon.value + '.svg' }}"
+            alt=""
+          />
+        </div>
+        <div class="forecast__row-item">
+          <div>
+            {{ item.temperatureHigh.value | number: "1.0-0" }}
+          </div>
+          <div>
+            {{ item.temperatureLow.value | number: "1.0-0" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngFor="let item of forecast.daily">
+      {{ item.summary.value }}
+    </div> -->
+  </div>
+</div>
